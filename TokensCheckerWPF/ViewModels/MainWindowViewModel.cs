@@ -161,8 +161,7 @@ namespace TokensCheckerWPF.ViewModels
             {
                 using (FileStream fstream = new FileStream(dialog.FileName, FileMode.OpenOrCreate))
                 {
-                    await fstream.FlushAsync();
-                    foreach (var line in dataTokens)
+                    foreach (var line in newTokens)
                     {
                         byte[] array = Encoding.Default.GetBytes($"{line}\n");
                         // запись массива байтов в файл
