@@ -129,9 +129,11 @@ namespace TokenBaseChekerCore
             int removedEmptyLinesCount = lines.RemoveAll(x => string.IsNullOrWhiteSpace(x));//Удаление пустых строк
 
             lines = lines.Select(outer => outer.Trim()).ToList();
-            Regex regex = new Regex(@"^\S+:\S+$");
+            Regex validLogPass = new Regex(@"^\S+:\S+$");
+            Regex invalidLogPass = new Regex(@"^([0-9]*|UNKNOWN):\S+$");
             //lines = lines.Where(outer => regex.Match(outer).Success).ToList();
-            int removedInvalidLines = lines.RemoveAll(outer => !regex.Match(outer).Success); //Удалить невалидные строки
+            int removedInvalidLines = lines.RemoveAll(outer => !validLogPass.Match(outer).Success || invalidLogPass.Match(outer).Success); //Удалить невалидные строки
+
 
             var UniqLines = lines.Distinct();
             var RemovedDublicatesLines = lines.Count - UniqLines.Count();
